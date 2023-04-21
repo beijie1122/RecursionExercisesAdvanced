@@ -1,4 +1,5 @@
 #include <iostream>
+#include <vector>
 
 void PrintArrayRecursion(int input[], int Size, int Index)
 {
@@ -121,14 +122,44 @@ void RemoveConsecutiveElements(char input[])
 
 }
 
+void PrintSubs(std::string InputString, std::string OutputString)
+{
+	if (InputString.length() == 0)
+	{
+		std::cout << OutputString << std::endl;
+		return;
+	}
+	PrintSubs(InputString.substr(1), OutputString);
+	PrintSubs(InputString.substr(1), OutputString + InputString[0]);
+	
+
+}
+
+void StoreSubs(std::string InputString, std::string OutputString, std::vector<std::string> &StoreVector)
+{
+	if (InputString.length() == 0)
+	{
+		std::cout << OutputString << std::endl;
+		StoreVector.push_back(OutputString);
+		return;
+	}
+	StoreSubs(InputString.substr(1), OutputString + InputString[0], StoreVector);
+	StoreSubs(InputString.substr(1), OutputString, StoreVector);
+	
+
+
+}
 
 
 int main()
 {
 	const int ArraySize{ 10 };
 	int TestArray[ArraySize]{1,2,3,4,5};
-	char CharArray[ArraySize]{'a','b','c','c','d','e','f'};
+	char CharArray[ArraySize]{'a','b','c','c','c','e','f'};
 	int ArrayLength{};
+	std::string InputString{ "abc" };
+	std::string OutputString{};
+	std::vector<std::string> OutputVector{};
 
 	PrintArrayRecursion(TestArray, ArraySize, 0);
 
@@ -148,6 +179,15 @@ int main()
 	RemoveConsecutiveElements(CharArray);
 	printf("\n");
 	PrintCharArrayVid(CharArray);
+
+	PrintSubs(InputString, OutputString);
+	StoreSubs(InputString, OutputString, OutputVector);
+	printf("Output Vector: ");
+	std::cout << OutputVector.size();
+	for (size_t i = 0; i < OutputVector.size(); i++)
+	{
+		std::cout << OutputVector.at(i);
+	}
 	
 
 	return 0;
