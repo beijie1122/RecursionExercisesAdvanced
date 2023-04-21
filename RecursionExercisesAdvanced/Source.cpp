@@ -22,16 +22,133 @@ void ReversePrintArrayRecursion(int input[], int Size, int Index)
 	PrintArrayRecursion(input, Size, Index -1);
 }
 
+void ReverseAccordingtoClass(int input[])
+{
+	if (input[0] == '\0')
+	{
+		return;
+	}
+	ReverseAccordingtoClass(input + 1);
+	std::cout << input[0];
+}
+
+void ArrayLengthRecursion(int input[], int Size, int Index, int &Length)
+{
+	if (Index == Size)
+	{
+		return;
+	}
+	else
+	{
+		Length++;
+	}
+	ArrayLengthRecursion(input, Size, Index + 1, Length);
+}
+
+int ArrayLengthVidVersion(char input[])
+{
+	if (input[0] == '\0')
+	{
+		return 0;
+	}
+
+	int SmallLength = ArrayLengthVidVersion(input + 1);
+	return 1 + SmallLength;
+}
+
+void ModifyRecursion(char input[], int ValuetoChange, int ChangedValue)
+{
+	if (input[0] == '\0')
+	{
+		return;
+	}
+	if (input[0] == ValuetoChange)
+	{
+		input[0] = ChangedValue;
+	}
+	ModifyRecursion(input + 1, ValuetoChange, ChangedValue);
+
+}
+
+void PrintCharArrayVid(char input[])
+{
+	if (input[0] == '\0')
+	{
+		return;
+	}
+	std::cout << input[0];
+	PrintCharArrayVid(input + 1);
+}
+
+void RemoveElementinArray(char input[])
+{
+	if (input[0] == '\0')
+	{
+		return;
+	}
+	if (input[0] != 'a')
+	{
+		RemoveElementinArray(input + 1);
+	}
+	else
+	{
+		for (size_t i = 0; input[i] != '\0'; i++)
+		{
+			input[i] = input[i + 1];
+		}
+		RemoveElementinArray(input);
+	}
+}
+
+void RemoveConsecutiveElements(char input[])
+{
+	if (input[0] == '\0') 
+	{
+		return;
+	}
+	if (input[0] != input[1])
+	{
+		RemoveConsecutiveElements(input + 1);
+	}
+	else
+	{
+		for (size_t i = 0; input[i] != '\0'; i++)
+		{
+			input[i] = input[i + 1];
+		}
+		RemoveConsecutiveElements(input);
+	}
+
+}
+
 
 
 int main()
 {
-	const int ArraySize{ 5 };
-	int TestArray[ArraySize]{ 1, 2, 3, 4, 5 };
+	const int ArraySize{ 10 };
+	int TestArray[ArraySize]{1,2,3,4,5};
+	char CharArray[ArraySize]{'a','b','c','c','d','e','f'};
+	int ArrayLength{};
 
 	PrintArrayRecursion(TestArray, ArraySize, 0);
 
-	ReversePrintArrayRecursion(TestArray, ArraySize, ArraySize - 1);
+	//ReversePrintArrayRecursion(TestArray, ArraySize, ArraySize - 1);
+	
+	//ReverseAccordingtoClass(TestArray);
+
+	ArrayLengthRecursion(TestArray, ArraySize, 0, ArrayLength);
+	std::cout << "Array Length: " << ArrayLength << std::endl;
+
+	int L = ArrayLengthVidVersion(CharArray);
+	std::cout << L << std::endl;
+
+	ModifyRecursion(CharArray, 'e', 'f');
+	PrintCharArrayVid(CharArray);
+	//RemoveElementinArray(CharArray);
+	RemoveConsecutiveElements(CharArray);
+	printf("\n");
+	PrintCharArrayVid(CharArray);
+	
 
 	return 0;
 
