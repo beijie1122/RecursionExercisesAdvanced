@@ -145,9 +145,63 @@ void StoreSubs(std::string InputString, std::string OutputString, std::vector<st
 	}
 	StoreSubs(InputString.substr(1), OutputString + InputString[0], StoreVector);
 	StoreSubs(InputString.substr(1), OutputString, StoreVector);
+}
+
+void PrintPermutation(char Input[], int Index)
+{
+	if (Input[Index] == '\0')
+	{
+		std::cout << Input << std::endl;
+		return;
+	}
+
+	for (size_t i = Index; Input[i] != '\0'; i++)
+	{
+		std::swap(Input[Index], Input[i]);
+		PrintPermutation(Input, Index + 1);
+		std::swap(Input[Index], Input[i]);
+	}
+
+
+}
+
+int StaircaseCountRecursion(int n)
+{
+	if (n == 0 || n == 1)
+	{
+		return 1;
+	}
+	if (n < 0)
+	{
+		return 0;
+	}
+
+	return StaircaseCountRecursion(n - 1) + StaircaseCountRecursion(n - 2) + StaircaseCountRecursion(n - 3);
+}
+
+int TowerofHanoi(int n)
+{
+	if (n == 0)
+	{
+		return 0;
+	}
+
+	return TowerofHanoi(n - 1) + 1 + TowerofHanoi(n - 1);
+
+}
+
+void PrintTowerofHanoi(int n, char S, char D, char H)
+{
+	if (n == 0)
+	{
+		return;
+	}
+
+	PrintTowerofHanoi(n - 1, S, H, D);
+	std::cout << "Moving Disk " << n << " From " << S << " to " << D << std::endl;
 	
-
-
+	PrintTowerofHanoi(n - 1, H, D, S);
+	//std::cout << "Moving Disk " << n << " From " << S << " to " << D << std::endl;
 }
 
 
@@ -160,6 +214,10 @@ int main()
 	std::string InputString{ "abc" };
 	std::string OutputString{};
 	std::vector<std::string> OutputVector{};
+
+	char PermutationString[4] = { 'A', 'B', 'C'};
+
+	int StaircaseVariable = 3;
 
 	PrintArrayRecursion(TestArray, ArraySize, 0);
 
@@ -189,6 +247,13 @@ int main()
 		std::cout << OutputVector.at(i);
 	}
 	
+	PrintPermutation(PermutationString, 0);
+
+	std::cout << "Staircase Solution: " << StaircaseCountRecursion(StaircaseVariable) << std::endl;
+
+	std::cout << "Tower of Hanoi: " << TowerofHanoi(StaircaseVariable) << std::endl;
+
+	PrintTowerofHanoi(StaircaseVariable, 'A', 'C', 'B');
 
 	return 0;
 
